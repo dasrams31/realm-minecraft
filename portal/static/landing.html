@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muse SMP — Survival Realm | mc.ramadanadipa.com</title>
+<meta name="description" content="Muse SMP — Paper 26.3 Minecraft survival server. Join at mc.ramadanadipa.com. TLauncher works, PvP on, cheats allowed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#100d0b; --bg2:#171310;
+  --grass:#5fca35; --grass-d:#3d8a22;
+  --dirt:#7a5230; --stone:#2b2b2b; --stone-hi:#5b5b5b;
+  --crimson:#d0342c; --crimson-hi:#f0503f;
+  --gold:#e0b33c; --txt:#f2ede4; --dim:#b9b0a1;
+  --edge:#0a0908;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:"Segoe UI",system-ui,-apple-system,sans-serif;overflow-x:hidden}
+.px{font-family:"Press Start 2P",monospace}
+.kanji-bg{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:min(72vw,640px);line-height:1;color:rgba(208,52,44,.055);pointer-events:none;user-select:none;z-index:0;font-weight:700}
+.vertical-jp{position:fixed;right:14px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;letter-spacing:.55em;z-index:0;color:rgba(224,179,60,.28);font-size:.8rem;pointer-events:none;user-select:none}
+.wrap{position:relative;z-index:1;max-width:1020px;margin:0 auto;padding:0 20px}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(16,13,11,.92);border-bottom:3px solid #26211c;backdrop-filter:blur(6px)}
+.nav-in{max-width:1020px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:"Press Start 2P",monospace;font-size:.8rem;color:#fff;text-shadow:2px 2px 0 #000;text-decoration:none}
+.brand b{color:var(--grass)}
+.nav-links{display:flex;gap:18px;align-items:center}
+.nav-links a{color:var(--dim);text-decoration:none;font-size:.82rem}
+.nav-links a:hover{color:var(--gold)}
+.status-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(0,0,0,.55);border:2px solid #2e2e2e;padding:7px 14px;font-size:.78rem;color:var(--dim);white-space:nowrap}
+.dot{width:10px;height:10px;border-radius:50%;background:#777;border:2px solid #000;display:inline-block;flex-shrink:0}
+.dot.on{background:var(--grass);box-shadow:0 0 10px var(--grass)}
+.dot.off{background:var(--crimson)}
+@media(max-width:760px){.nav-links a{display:none}.nav-links a.keep{display:inline}}
+
+/* hero */
+.hero{min-height:96vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;padding:110px 20px 60px}
+.sun{width:130px;height:130px;border-radius:50%;background:radial-gradient(circle at 38% 35%,var(--crimson-hi),var(--crimson) 62%,#7e1f1a);box-shadow:0 0 90px rgba(208,52,44,.5),0 0 220px rgba(208,52,44,.22);margin-bottom:34px;position:relative}
+.sun::after{content:"";position:absolute;inset:-16px;border:4px dashed rgba(208,52,44,.4);border-radius:50%;animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.kicker{color:var(--crimson-hi);letter-spacing:.5em;font-size:.72rem;margin-bottom:18px;text-indent:.5em}
+.title{font-size:clamp(1.7rem,7vw,4.2rem);line-height:1.25;color:#fff;text-shadow:0 4px 0 #3a2c12,4px 0 0 #3a2c12,-4px 0 0 #3a2c12,0 -4px 0 #3a2c12,4px 4px 0 #3a2c12,-4px 4px 0 #3a2c12,4px -4px 0 #3a2c12,-4px -4px 0 #3a2c12,0 10px 0 rgba(0,0,0,.55);margin-bottom:20px}
+.title .g{color:var(--grass);text-shadow:0 4px 0 #1d3a12,4px 0 0 #1d3a12,-4px 0 0 #1d3a12,0 -4px 0 #1d3a12,4px 4px 0 #1d3a12,-4px 4px 0 #1d3a12,4px -4px 0 #1d3a12,-4px -4px 0 #1d3a12,0 10px 0 rgba(0,0,0,.55)}
+.tagline{color:var(--dim);max-width:560px;line-height:1.7;margin-bottom:30px}
+.addr-chip{display:flex;align-items:stretch;margin-bottom:18px;flex-wrap:wrap;justify-content:center}
+.addr-chip code{font-family:"Press Start 2P",monospace;font-size:clamp(.62rem,2.4vw,.85rem);background:#0c0b0a;border:3px solid var(--edge);border-right:none;padding:16px 18px;color:var(--grass);box-shadow:inset 2px 2px 0 #2a2a2a}
+.mc-btn{font-family:"Press Start 2P",monospace;font-size:.7rem;color:#fff;cursor:pointer;background:#5a5a5a;border:3px solid var(--edge);padding:14px 20px;box-shadow:inset 3px 3px 0 #8a8a8a,inset -3px -3px 0 #333;text-shadow:2px 2px 0 rgba(0,0,0,.5);text-decoration:none;display:inline-block}
+.mc-btn:hover{filter:brightness(1.15)}
+.mc-btn:active{transform:translateY(2px)}
+.mc-btn.green{background:var(--grass-d);box-shadow:inset 3px 3px 0 var(--grass),inset -3px -3px 0 #2a5c17}
+.mc-btn.small{padding:9px 14px;font-size:.62rem}
+.players-online{display:flex;align-items:center;gap:10px;margin:6px 0 26px;min-height:44px;flex-wrap:wrap;justify-content:center}
+.head{width:40px;height:40px;image-rendering:pixelated;border:3px solid var(--edge);background:#1a1a1a}
+.pname{font-size:.75rem;color:var(--dim);margin:-6px 8px 0 -4px}
+.scroll-hint{position:absolute;bottom:86px;color:var(--dim);font-size:.75rem;letter-spacing:.3em;animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(8px)}}
+
+.terrain{height:64px;position:relative;z-index:1;background:linear-gradient(var(--grass) 0 14px,var(--dirt) 14px 100%);border-top:4px solid #2c5c18;image-rendering:pixelated}
+.terrain::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 46px,rgba(0,0,0,.22) 46px 50px),repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 24px,transparent 24px 50px)}
+
+section{padding:72px 0;position:relative}
+.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.sec-head h2{font-size:clamp(.95rem,3.4vw,1.35rem);color:#fff;text-shadow:3px 3px 0 #000;white-space:nowrap}
+.sec-head .kanji{color:var(--crimson);font-size:1.6rem;font-weight:700}
+.sec-head .line{flex:1;height:3px;background:linear-gradient(90deg,var(--crimson),transparent)}
+.sec-sub{color:var(--dim);margin-bottom:32px;line-height:1.7;max-width:640px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:18px}
+.stat{background:var(--stone);border:3px solid var(--edge);box-shadow:inset 3px 3px 0 var(--stone-hi),inset -3px -3px 0 #161616;padding:18px 14px;text-align:center}
+.stat b{display:block;font-family:"Press Start 2P",monospace;font-size:1.05rem;color:var(--gold);margin-bottom:8px;text-shadow:2px 2px 0 #000}
+.stat span{color:var(--dim);font-size:.78rem}
+.chart-box{background:#0c0c0c;border:3px solid var(--edge);padding:16px}
+.chart-box h3{font-family:"Press Start 2P",monospace;font-size:.68rem;color:var(--dim);margin-bottom:12px}
+#hist-chart{width:100%;height:150px}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:var(--stone);border:3px solid var(--edge);padding:22px 20px;position:relative;box-shadow:inset 3px 3px 0 var(--stone-hi),inset -3px -3px 0 #161616;transition:transform .15s ease}
+.card:hover{transform:translateY(-4px)}
+.card::before{content:"";position:absolute;top:0;left:0;width:100%;height:5px;background:var(--crimson)}
+.card .ico{font-size:1.7rem;margin-bottom:12px}
+.card h3{font-family:"Press Start 2P",monospace;font-size:.68rem;margin-bottom:10px;color:var(--gold);line-height:1.6}
+.card p{color:var(--dim);font-size:.88rem;line-height:1.65}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:start}
+@media(max-width:720px){.about-grid{grid-template-columns:1fr}}
+.about-text p{color:var(--dim);line-height:1.85;margin-bottom:16px}
+.about-text p b{color:var(--txt)}
+.facts{background:#0c0c0c;border:3px solid var(--edge);box-shadow:inset 2px 2px 0 #2a2a2a}
+.facts h3{font-family:"Press Start 2P",monospace;font-size:.68rem;color:var(--gold);padding:16px 18px;border-bottom:3px solid var(--edge)}
+.facts table{width:100%;border-collapse:collapse;font-size:.86rem}
+.facts td{padding:11px 18px;border-bottom:2px solid #1e1e1e;color:var(--dim)}
+.facts td:first-child{color:var(--txt);font-weight:bold;width:38%}
+.facts tr:last-child td{border-bottom:none}
+.facts td code{color:var(--grass);background:#000;padding:2px 8px;font-size:.8rem}
+
+/* perintis */
+.pioneers{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+.pioneer{background:var(--stone);border:3px solid var(--edge);box-shadow:inset 3px 3px 0 var(--stone-hi),inset -3px -3px 0 #161616;padding:22px 18px;text-align:center;position:relative;transition:transform .15s ease}
+.pioneer:hover{transform:translateY(-4px)}
+.pioneer .rank{position:absolute;top:-3px;left:-3px;font-family:"Press Start 2P",monospace;font-size:.62rem;background:var(--gold);color:#3a2c12;padding:8px 10px;border:3px solid var(--edge)}
+.pioneer img{width:64px;height:64px;image-rendering:pixelated;border:3px solid var(--edge);margin-bottom:10px;background:#1a1a1a}
+.pioneer h3{font-family:"Press Start 2P",monospace;font-size:.66rem;margin-bottom:8px;word-break:break-all}
+.pioneer .last{color:var(--dim);font-size:.78rem}
+
+/* update timeline */
+.timeline{max-width:680px;position:relative;padding-left:30px}
+.timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:3px;background:#3a3a3a}
+.tl-item{position:relative;margin-bottom:26px;background:#1c1a17;border:3px solid var(--edge);padding:16px 18px;box-shadow:inset 2px 2px 0 #3a352d}
+.tl-item::before{content:"";position:absolute;left:-27px;top:20px;width:12px;height:12px;background:var(--crimson);border:3px solid var(--edge)}
+.tl-item .date{font-family:"Press Start 2P",monospace;font-size:.6rem;color:var(--gold);margin-bottom:8px}
+.tl-item h3{font-size:.95rem;margin-bottom:6px}
+.tl-item p{color:var(--dim);font-size:.86rem;line-height:1.65}
+
+/* back to top */
+#to-top{position:fixed;right:18px;bottom:18px;z-index:60;display:none;font-size:.8rem}
+#to-top.show{display:inline-block}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.g-item{border:3px solid var(--edge);overflow:hidden;background:#0c0c0c;position:relative}
+.g-item img{width:100%;display:block;transition:transform .3s ease}
+.g-item:hover img{transform:scale(1.03)}
+.g-cap{padding:12px 14px;font-size:.82rem;color:var(--dim);border-top:3px solid var(--edge)}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.step{background:#1c1a17;border:3px solid var(--edge);padding:26px 20px;text-align:center;box-shadow:inset 3px 3px 0 #3a352d,inset -3px -3px 0 #0e0d0b}
+.step .num{font-family:"Press Start 2P",monospace;font-size:1.1rem;color:#fff;background:var(--crimson);width:52px;height:52px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;border:3px solid var(--edge);box-shadow:3px 3px 0 rgba(0,0,0,.5)}
+.step h3{font-family:"Press Start 2P",monospace;font-size:.7rem;margin-bottom:10px;line-height:1.7}
+.step p{color:var(--dim);font-size:.88rem;line-height:1.65}
+.step p code{color:var(--grass);background:#0c0b0a;padding:2px 8px;border:2px solid #2a2a2a;font-size:.8rem}
+
+/* rules */
+.rules{list-style:none;display:grid;gap:14px;max-width:680px}
+.rules li{display:flex;gap:16px;align-items:flex-start;background:#1c1a17;border:3px solid var(--edge);padding:16px 18px;box-shadow:inset 2px 2px 0 #3a352d}
+.rules .mark{font-family:"Press Start 2P",monospace;font-size:.8rem;flex-shrink:0;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:3px solid var(--edge)}
+.mark.ok{background:var(--grass-d);color:#fff}
+.mark.no{background:#6b1f1b;color:#ffb3ab}
+.rules b{display:block;margin-bottom:4px}
+.rules p{color:var(--dim);font-size:.88rem;line-height:1.6}
+
+/* faq */
+.faq{max-width:720px;display:grid;gap:12px}
+.faq details{background:#1c1a17;border:3px solid var(--edge);box-shadow:inset 2px 2px 0 #3a352d}
+.faq summary{cursor:pointer;padding:16px 18px;font-weight:bold;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--gold);font-size:1.3rem}
+.faq details[open] summary::after{content:"−"}
+.faq .a{padding:0 18px 18px;color:var(--dim);line-height:1.7;font-size:.9rem}
+.faq .a code{color:var(--grass);background:#0c0b0a;padding:2px 8px;font-size:.82rem}
+
+.cta{text-align:center;padding:80px 20px}
+.cta h2{font-size:clamp(1rem,4vw,1.6rem);text-shadow:3px 3px 0 #000;margin-bottom:14px;line-height:1.6}
+.cta p{color:var(--dim);margin-bottom:28px}
+.cta .mc-btn{font-size:.85rem;padding:18px 34px}
+footer{border-top:3px solid #26211c;padding:28px 20px;text-align:center;color:var(--dim);font-size:.82rem}
+footer a{color:var(--dim);text-decoration:none;border-bottom:1px dotted #555}
+footer a:hover{color:var(--gold)}
+footer .jp{color:rgba(208,52,44,.7);letter-spacing:.4em;font-size:.72rem;margin-bottom:10px}
+@media(max-width:640px){.vertical-jp{display:none}}
+</style>
+</head>
+<body>
+<div class="kanji-bg">領域</div>
+<div class="vertical-jp">マインクラフト・サバイバル</div>
+
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="#top">⛏ MUSE <b>SMP</b></a>
+    <div class="nav-links">
+      <a href="#status">Status</a>
+      <a href="#tentang">About</a>
+      <a href="#fitur">Features</a>
+      <a href="#perintis">Pioneers</a>
+      <a href="#galeri">Gallery</a>
+      <a href="#join">How to Join</a>
+      <a href="#aturan">Rules</a>
+      <a href="#faq">FAQ</a>
+      <a class="keep status-pill" href="#status"><span class="dot" id="ndot"></span><span id="ntext">…</span></a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <div class="sun"></div>
+  <p class="kicker px">領域 — SURVIVAL REALM</p>
+  <h1 class="title px">MUSE <span class="g">SMP</span></h1>
+  <p class="tagline">A massive shogunate-era metropolis — 200+ hand-built Japanese buildings inside Attack-on-Titan-style walls. Castles, sumo arena, kabuki theater, 85 NPCs. PvP on, cheats allowed, TLauncher welcome.</p>
+  <div class="addr-chip">
+    <code id="addr">mc.ramadanadipa.com</code>
+    <button class="mc-btn green" id="copy-btn">COPY</button>
+  </div>
+  <div class="players-online" id="players-online"></div>
+  <div class="scroll-hint px">▼ SCROLL ▼</div>
+</header>
+
+<div class="terrain"></div>
+
+<section id="status">
+  <div class="wrap">
+    <div class="sec-head"><span class="kanji">活</span><h2 class="px">LIVE STATUS</h2><div class="line"></div></div>
+    <p class="sec-sub">Current server status, updated automatically.</p>
+    <div class="stats">
+      <div class="stat"><b id="s-online">…</b><span>Players online</span></div>
+      <div class="stat"><b id="s-reg">…</b><span>Registered players</span></div>
+      <div class="stat"><b id="s-world">…</b><span>World size</span></div>
+      <div class="stat"><b>26.3</b><span>Version (Paper)</span></div>
+    </div>
+    <div class="chart-box">
+      <h3>PLAYERS ONLINE — LAST 24 HOURS</h3>
+      <canvas id="hist-chart" width="900" height="150"></canvas>
+    </div>
+  </div>
+</section>
+
+<section id="tentang">
+  <div class="wrap">
+    <div class="sec-head"><span class="kanji">紹</span><h2 class="px">ABOUT THE REALM</h2><div class="line"></div></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p><b>Muse SMP</b> is now home to a massive <b>shogunate-era metropolis</b> — 200+ hand-built Japanese buildings protected by three colossal Attack-on-Titan-style walls. Explore the 5-story castle keep, the golden-pillared Shogun Palace, a sumo arena, kabuki theater, samurai academy, and night market.</p>
+        <p>85 NPCs bring the city to life: samurai guards at the gates, archers in the towers, merchants in the market, and villagers in the streets. Spawn at the castle plaza, wander the cherry-blossom avenues, or relax in the giant city park.</p>
+        <p>No premium Minecraft account needed: <b>TLauncher works</b>. Cheats allowed, PvP on, and no sudden world resets. Build your base, challenge your friends to a duel, or just wander around enjoying the blocky sunset.</p>
+        <p>This realm is hand-maintained by the admin — if something's wrong, just report it.</p>
+      </div>
+      <div class="facts">
+        <h3>SERVER INFO</h3>
+        <table>
+          <tr><td>Address</td><td><code>mc.ramadanadipa.com</code></td></tr>
+          <tr><td>Version</td><td>Paper 26.3 (latest Java)</td></tr>
+          <tr><td>Capacity</td><td>15 players</td></tr>
+          <tr><td>Mode</td><td>Survival</td></tr>
+          <tr><td>Difficulty</td><td>Normal</td></tr>
+          <tr><td>PvP</td><td>On</td></tr>
+          <tr><td>Cheats</td><td>Allowed</td></tr>
+          <tr><td>TLauncher</td><td>Yes ✅</td></tr>
+          <tr><td>Status</td><td>Online 24/7</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="fitur" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head"><span class="kanji">特</span><h2 class="px">SERVER FEATURES</h2><div class="line"></div></div>
+    <p class="sec-sub">A Japanese-themed realm with hand-built landmarks, helper bots, and full freedom.</p>
+    <div class="cards">
+      <div class="card"><div class="ico">🏯</div><h3>SHOGUNATE METROPOLIS</h3><p>200+ hand-built Japanese buildings: castle keep, Shogun Palace with golden pillars, 60 unique procedurally-designed townhouses, samurai districts, and merchant quarters.</p></div>
+      <div class="card"><div class="ico">🛡️</div><h3>AOT-STYLE WALLS</h3><p>Three colossal concentric walls like Attack on Titan — Wall Maria (50 blocks tall!), Wall Rose, and Wall Sina, with 12 gates and giant towers.</p></div>
+      <div class="card"><div class="ico">👘</div><h3>85 NPC CITIZENS</h3><p>Samurai guards, archers, merchants, monks, and villagers populate the city. Invulnerable armor-stand NPCs — they can't die.</p></div>
+      <div class="card"><div class="ico">🏟️</div><h3>SUMO ARENA & THEATER</h3><p>Full sumo arena with dohyo ring and tiered seating, kabuki theater with red curtains, samurai academy, and a colorful night market.</p></div>
+      <div class="card"><div class="ico">🛡️</div><h3>MONSTER-FREE CITY</h3><p>The entire walled city is protected — no monster spawns, no creeper explosions, no enderman griefing. Sleep peacefully.</p></div>
+      <div class="card"><div class="ico">🤖</div><h3>HELPER BOTS</h3><p><b>Muse</b> greets you at spawn and handles teleports (<code>tpa</code>). <b>MuseAFK</b> keeps chunks loaded — type <code>summon</code> to call it.</p></div>
+      <div class="card"><div class="ico">⚔️</div><h3>PURE SURVIVAL</h3><p>Survival mode. Gather, build, and survive your way — with cheats allowed for unlimited creativity.</p></div>
+      <div class="card"><div class="ico">👥</div><h3>UP TO 15 PLAYERS</h3><p>Small capacity to keep it cozy and the server light. Play with friends, not strangers.</p></div>
+      <div class="card"><div class="ico">🗡️</div><h3>PVP ENABLED</h3><p>Player combat is allowed. Build arenas, wage faction wars, or duel one-on-one.</p></div>
+      <div class="card"><div class="ico">🔓</div><h3>TLAUNCHER WORKS</h3><p>No premium account required. Register a password once with <b>/register</b>, then <b>/login</b> each time you join.</p></div>
+      <div class="card"><div class="ico">🖥️</div><h3>PAPER 26.3</h3><p>The latest Paper server — smooth performance. Requires the latest Minecraft Java version.</p></div>
+      <div class="card"><div class="ico">🔐</div><h3>SECURE LOGIN</h3><p>The AuthMe plugin protects your username — nobody can impersonate you.</p></div>
+      <div class="card"><div class="ico">🌱</div><h3>FRESH WORLD</h3><p>Seed <code style="color:var(--grass)">314159268636552365</code> — a brand-new world waiting to be explored.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="perintis" style="background:var(--bg2)">
+
+<section id="landmark">
+  <div class="wrap">
+    <div class="sec-head"><span class="kanji">名</span><h2 class="px">REALM LANDMARKS</h2><div class="line"></div></div>
+    <p class="sec-sub">The shogunate metropolis — castles, walls, arenas, and gardens.</p>
+    <div class="cards">
+      <div class="card"><div class="ico">🏯</div><h3>CASTLE KEEP</h3><p>5-story tenshu on stone ramparts — the city's crown, visible for miles.</p></div>
+      <div class="card"><div class="ico">👑</div><h3>SHOGUN PALACE</h3><p>7,860-block palace with golden pillars, 4-tiered roofs, and inner garden.</p></div>
+      <div class="card"><div class="ico">🛡️</div><h3>THREE AOT WALLS</h3><p>Wall Maria (50 tall!), Rose, and Sina — concentric colossal fortifications with 12 gates.</p></div>
+      <div class="card"><div class="ico">🏟️</div><h3>SUMO ARENA</h3><p>Dohyo ring under a traditional roof, tiered spectator seating.</p></div>
+      <div class="card"><div class="ico">🎭</div><h3>KABUKI THEATER</h3><p>Stage with red curtains and tiered seating in the entertainment district.</p></div>
+      <div class="card"><div class="ico">🎓</div><h3>SAMURAI ACADEMY</h3><p>Grand dojo with tatami, weapon racks, and twin dormitories.</p></div>
+      <div class="card"><div class="ico">🏮</div><h3>NIGHT MARKET</h3><p>8 colorful stalls with hanging lanterns under a grand gate.</p></div>
+      <div class="card"><div class="ico">🌳</div><h3>GIANT CITY PARK</h3><p>50×50 park with a central pond, wooden bridge, and 10 shade trees.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="perintis" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head"><span class="kanji">勇</span><h2 class="px">THE PIONEERS</h2><div class="line"></div></div>
+    <p class="sec-sub">The first to set foot in this realm. Respect to the veterans! 🗡️</p>
+    <div class="pioneers" id="pioneers"><p class="sec-sub">Loading…</p></div>
+  </div>
+</section>
+
+<section id="galeri">
+  <div class="wrap">
+    <div class="sec-head"><span class="kanji">画</span><h2 class="px">GALLERY</h2><div class="line"></div></div>
+    <p class="sec-sub">The realm's official poster.</p>
+    <div class="gallery">
+      <div class="g-item">
+        <img src="/static/poster.webp" alt="Poster Muse SMP" loading="lazy">
+        <div class="g-cap">Muse SMP's official poster — feel free to share! ⛏️</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="join" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head"><span class="kanji">入</span><h2 class="px">HOW TO JOIN</h2><div class="line"></div></div>
+    <p class="sec-sub">Three steps, under a minute. <b>Minecraft Java Edition</b> (PC) only.</p>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><h3>MULTIPLAYER</h3><p>Open Minecraft Java Edition and select the <b>Multiplayer</b> menu.</p></div>
+      <div class="step"><div class="num">2</div><h3>ADD SERVER</h3><p>Click <b>Add Server</b> and enter the address:<br><code>mc.ramadanadipa.com</code><br><br><button class="mc-btn small green" id="copy-btn2">COPY IP</button></p></div>
+      <div class="step"><div class="num">3</div><h3>JOIN!</h3><p>Click the server → <b>Join Server</b>. First time: <code>/register</code>, afterwards <code>/login</code>.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="aturan">
+  <div class="wrap">
+    <div class="sec-head"><span class="kanji">規</span><h2 class="px">SERVER RULES</h2><div class="line"></div></div>
+    <p class="sec-sub">A few rules so everyone feels at home.</p>
+    <ul class="rules">
+      <li><span class="mark no">✕</span><div><b>No griefing</b><p>Don't destroy other players' builds without permission. Small pranks are fine, mayhem is not.</p></div></li>
+      <li><span class="mark ok">✓</span><div><b>Cheats allowed</b><p>Commands are free to use — but don't use them to ruin other players' experience.</p></div></li>
+      <li><span class="mark ok">✓</span><div><b>Fair PvP</b><p>Fighting is fine, but repeated spawn-killing and toxic chat = kick.</p></div></li>
+      <li><span class="mark no">✕</span><div><b>Don't break the server</b><p>Lag machines, mass dupe exploits, or chat spam will get you banned.</p></div></li>
+      <li><span class="mark no">✕</span><div><b>One account per person</b><p>Don't use someone else's username. Your AuthMe password is private.</p></div></li>
+    </ul>
+  </div>
+</section>
+
+<section id="faq" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head"><span class="kanji">問</span><h2 class="px">FAQ</h2><div class="line"></div></div>
+    <p class="sec-sub">Frequently asked questions.</p>
+    <div class="faq">
+      <details><summary>Can TLauncher / cracked MC join?</summary><div class="a">Yes. The server doesn't require a premium account. But you <b>must</b> register a password with <code>/register</code> when you first join, then <code>/login</code> every time after.</div></details>
+      <details><summary>Which Minecraft version do I need?</summary><div class="a">The <b>latest</b> one (26.3). If yours is older, update via your launcher first — otherwise you'll be rejected with an "outdated" message.</div></details>
+      <details><summary>Are cheats allowed?</summary><div class="a">Yes. Commands like <code>/gamemode</code>, <code>/give</code>, and <code>/tp</code> are free to use. Just don't use them to grief or ruin others' game.</div></details>
+      <details><summary>What if I forget my AuthMe password?</summary><div class="a">Contact the admin — passwords can be reset from the portal. Never share your password with anyone.</div></details>
+      <details><summary>Is my progress safe if I switch computers?</summary><div class="a">Yes, as long as you use the <b>same username</b> and remember your AuthMe password. Data is stored on the server.</div></details>
+      <details><summary>When is the server online?</summary><div class="a">24/7, except for brief maintenance/restarts. Live status is shown at the top of this page.</div></details>
+      <details><summary>Who are Muse and MuseAFK?</summary><div class="a"><b>Muse</b> is a helper bot at spawn — chat with it, or type <code>tpa &lt;player&gt;</code> to request a teleport. <b>MuseAFK</b> keeps chunks loaded for farms — type <code>summon</code> in chat to teleport it to you.</div></details>
+      <details><summary>Is the village safe from monsters?</summary><div class="a">Yes! The entire village is a protected zone — monsters can't spawn there and creepers can't explode. The rest of the world is normal survival.</div></details>
+    </div>
+  </div>
+</section>
+
+<section id="update">
+  <div class="wrap">
+    <div class="sec-head"><span class="kanji">新</span><h2 class="px">LATEST UPDATES</h2><div class="line"></div></div>
+    <p class="sec-sub">Realm changelog.</p>
+    <div class="timeline">
+      <div class="tl-item"><div class="date">OCT 3, 2026</div><h3>Attack-on-Titan walls</h3><p>Three colossal concentric walls built — Maria (50 blocks tall!), Rose, Sina — with 12 gates and giant corner towers.</p></div>
+      <div class="tl-item"><div class="date">OCT 3, 2026</div><h3>85 NPC citizens</h3><p>Samurai guards, archers, merchants, monks, and villagers — invulnerable NPCs bringing the metropolis to life.</p></div>
+      <div class="tl-item"><div class="date">OCT 3, 2026</div><h3>Sumo arena, kabuki theater, Shogun Palace</h3><p>Arena with dohyo ring, theater with red curtains, and a 7,860-block palace with golden pillars.</p></div>
+      <div class="tl-item"><div class="date">OCT 3, 2026</div><h3>Metropolis: 200+ buildings</h3><p>60 unique procedurally-designed buildings added across 3 new districts. City park, grand south gate, canal with arched bridges.</p></div>
+      <div class="tl-item"><div class="date">OCT 3, 2026</div><h3>Shogunate castle town founded</h3><p>5-story castle keep, medieval fortress walls, samurai & merchant districts, satellite villages, onsen, koi pond.</p></div>
+      <div class="tl-item"><div class="date">OCT 3, 2026</div><h3>Monster-free village</h3><p>WorldGuard protection installed — no mob spawns or creeper explosions in the village.</p></div>
+      <div class="tl-item"><div class="date">OCT 3, 2026</div><h3>In-game HUD</h3><p>Live coordinates, compass direction, and world seed now display in-game.</p></div>
+      <div class="tl-item"><div class="date">OCT 3, 2026</div><h3>Helper bots online</h3><p><b>Muse</b> at spawn (chat, TPA teleports) and <b>MuseAFK</b> chunk-loader (type <code>summon</code> to call it).</p></div>
+      <div class="tl-item"><div class="date">OCT 3, 2026</div><h3>Japanese village founded</h3><p>First village district built: 6 minka houses, plaza, rice fields, torii gate, and market expansion.</p></div>
+      <div class="tl-item"><div class="date">OCT 3, 2026</div><h3>Realm landing page launched</h3><p>This page was created — complete with live status, statistics, and gallery.</p></div>
+      <div class="tl-item"><div class="date">OCT 3, 2026</div><h3>TLauncher officially supported</h3><p>AuthMe plugin installed — players without premium accounts can join by registering a password.</p></div>
+      <div class="tl-item"><div class="date">OCT 3, 2026</div><h3>New world</h3><p>Seed changed to <code style="color:var(--grass)">314159268636552365</code> — old world safely backed up.</p></div>
+      <div class="tl-item"><div class="date">OCT 3, 2026</div><h3>Server opened</h3><p>Muse SMP officially opened at <code style="color:var(--grass)">mc.ramadanadipa.com</code> — Paper 26.3, survival, PvP on.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="cta wrap">
+  <h2 class="px">READY FOR ADVENTURE?</h2>
+  <p>The realm is online 24/7. See you inside! 🗡️</p>
+  <a class="mc-btn green" href="#top">JOIN NOW</a>
+</div>
+
+<footer>
+  <div class="jp px">領域 MUSE SMP 領域</div>
+  <p>realm.ramadanadipa.com — hand-maintained with ❤ · <a href="/manage">admin portal</a></p>
+</footer>
+
+<button class="mc-btn" id="to-top" title="Back to top">▲</button>
+
+<script>
+const ADDR = "mc.ramadanadipa.com";
+function copyAddr(btn) {
+  (async () => {
+    try { await navigator.clipboard.writeText(ADDR); }
+    catch { const t = document.createElement("textarea"); t.value = ADDR; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); }
+    const old = btn.textContent; btn.textContent = "COPIED!";
+    setTimeout(() => btn.textContent = old, 1500);
+  })();
+}
+document.getElementById("copy-btn").onclick = e => copyAddr(e.target);
+const cb2 = document.getElementById("copy-btn2");
+if (cb2) cb2.onclick = e => copyAddr(e.target);
+const toTop = document.getElementById("to-top");
+window.addEventListener("scroll", () => toTop.classList.toggle("show", window.scrollY > 600), {passive: true});
+toTop.onclick = () => window.scrollTo({top: 0, behavior: "smooth"});
+function fmtBytes(b) {
+  if (b == null) return "…";
+  if (b > 1073741824) return (b / 1073741824).toFixed(2) + " GB";
+  if (b > 1048576) return (b / 1048576).toFixed(1) + " MB";
+  return Math.round(b / 1024) + " KB";
+}
+async function status() {
+  try {
+    const s = await (await fetch("/api/public-status")).json();
+    const up = s.server_up;
+    for (const [d, t] of [["ndot", "ntext"]]) {
+      const dot = document.getElementById(d);
+      dot.className = "dot " + (up ? "on" : "off");
+    }
+    document.getElementById("ntext").textContent = up ? `${s.online}/${s.max} online` : "Offline";
+    document.getElementById("s-online").textContent = up ? `${s.online} / ${s.max}` : "Offline";
+    document.getElementById("s-reg").textContent = s.registered == null ? "…" : s.registered;
+    document.getElementById("s-world").textContent = fmtBytes(s.world_size);
+    const box = document.getElementById("players-online");
+    box.innerHTML = "";
+    if (up && s.names && s.names.length) {
+      s.names.forEach(n => {
+        const img = document.createElement("img");
+        img.className = "head"; img.alt = n; img.title = n;
+        img.src = "https://minotar.net/helm/" + encodeURIComponent(n) + "/40.png";
+        const lbl = document.createElement("span");
+        lbl.className = "pname"; lbl.textContent = n;
+        box.appendChild(img); box.appendChild(lbl);
+      });
+    } else if (up) {
+      box.innerHTML = '<span class="pname">Nobody\'s online yet — be the first! ⛏️</span>';
+    }
+  } catch { document.getElementById("ntext").textContent = "…"; }
+}
+async function history() {
+  try {
+    const h = await (await fetch("/api/public-history")).json();
+    const c = document.getElementById("hist-chart"), x = c.getContext("2d");
+    const W = c.width, H = c.height;
+    x.clearRect(0, 0, W, H);
+    const pts = h.points || [];
+    if (pts.length < 2) {
+      x.fillStyle = "#5a5a5a"; x.font = "13px sans-serif";
+      x.fillText("Collecting 24-hour data…", 16, H / 2);
+      return;
+    }
+    const maxN = Math.max(5, ...pts.map(p => p.n));
+    x.strokeStyle = "#3a3a3a"; x.beginPath();
+    for (let g = 0; g <= 4; g++) { const y = (g / 4) * H; x.moveTo(0, y); x.lineTo(W, y); }
+    x.stroke();
+    const t0 = pts[0].t, t1 = pts[pts.length - 1].t || t0 + 1;
+    x.strokeStyle = "#5fca35"; x.lineWidth = 2; x.beginPath();
+    x.fillStyle = "rgba(95,202,53,.15)";
+    pts.forEach((p, i) => {
+      const px = ((p.t - t0) / (t1 - t0)) * W, py = H - (p.n / maxN) * (H - 8) - 4;
+      i ? x.lineTo(px, py) : x.moveTo(px, py);
+    });
+    x.stroke();
+    x.lineTo(W, H); x.lineTo(0, H); x.closePath(); x.fill();
+    x.lineWidth = 1;
+  } catch {}
+}
+function relTime(ms) {
+  if (!ms) return "never played";
+  const s = Math.floor(Date.now() - ms) / 1000;
+  if (s < 0) return "just now";
+  if (s < 3600) { const m = Math.floor(s / 60); return m <= 1 ? "just now" : m + " minutes ago"; }
+  if (s < 86400) { const h = Math.floor(s / 3600); return h === 1 ? "1 hour ago" : h + " hours ago"; }
+  const d = Math.floor(s / 86400);
+  return d === 1 ? "yesterday" : d + " days ago";
+}
+async function pioneers() {
+  try {
+    const p = await (await fetch("/api/public-pioneers")).json();
+    const box = document.getElementById("pioneers");
+    box.innerHTML = "";
+    if (!p.pioneers || !p.pioneers.length) {
+      box.innerHTML = '<p class="sec-sub">No pioneers yet — be the first! ⛏️</p>';
+      return;
+    }
+    p.pioneers.forEach(x => {
+      const d = document.createElement("div");
+      d.className = "pioneer";
+      d.innerHTML = '<span class="rank">#' + x.rank + '</span>' +
+        '<img src="https://minotar.net/helm/' + encodeURIComponent(x.name) + '/64.png" alt="' + x.name.replace(/"/g, "") + '" loading="lazy">' +
+        '<h3>' + x.name.replace(/</g, "&lt;") + '</h3>' +
+        '<div class="last">Last played: ' + relTime(x.last) + '</div>';
+      box.appendChild(d);
+    });
+  } catch {}
+}
+status(); history(); pioneers();
+setInterval(status, 20000);
+setInterval(history, 60000);
+setInterval(pioneers, 120000);
+</script>
+</body>
+</html>

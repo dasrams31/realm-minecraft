@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muse SMP — Portal Admin</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div id="login-screen" class="screen hidden">
+  <div class="login-card mc-panel">
+    <h1>⛏ MUSE SMP</h1>
+    <p class="sub">Portal Admin</p>
+    <input id="pw" type="password" placeholder="Password admin" autocomplete="current-password">
+    <button id="login-btn" class="mc-btn green">Masuk</button>
+    <p id="login-err" class="err"></p>
+  </div>
+</div>
+
+<div id="app" class="screen hidden">
+  <header class="topbar">
+    <div class="brand">⛏ MUSE SMP <span class="tag">ADMIN</span></div>
+    <div class="top-right">
+      <span id="svc-dot" class="dot"></span><span id="svc-text">…</span>
+      <button id="logout-btn" class="mc-btn small red">Keluar</button>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button data-tab="status" class="tab active">Status</button>
+    <button data-tab="pemain" class="tab">Pemain</button>
+    <button data-tab="plugin" class="tab">Plugin</button>
+    <button data-tab="dunia" class="tab">Dunia</button>
+    <button data-tab="gamerule" class="tab">Gamerule</button>
+    <button data-tab="cheat" class="tab">Cheat &amp; Aturan</button>
+    <button data-tab="aturan" class="tab">Pengaturan</button>
+    <button data-tab="file" class="tab">File</button>
+    <button data-tab="jadwal" class="tab">Jadwal</button>
+    <button data-tab="konsol" class="tab">Konsol</button>
+    <button data-tab="log" class="tab">Log Aktivitas</button>
+  </nav>
+
+  <main>
+    <!-- STATUS -->
+    <section id="tab-status" class="tabpanel active">
+      <div class="grid2">
+        <div class="mc-panel">
+          <h2>Status Server</h2>
+          <div class="kv"><span>Kondisi</span><b id="st-cond">…</b></div>
+          <div class="kv"><span>Versi</span><b id="st-ver">…</b></div>
+          <div class="kv"><span>MOTD</span><b id="st-motd">…</b></div>
+          <div class="kv"><span>Pemain</span><b id="st-players">…</b></div>
+          <div class="kv"><span>Difficulty</span><b id="st-diff">…</b></div>
+          <div class="kv"><span>Cheat</span><b id="st-cheat">…</b></div>
+        </div>
+        <div class="mc-panel">
+          <h2>Daya</h2>
+          <p class="hint">Start / stop / restart butuh ~30 detik.</p>
+          <div class="btnrow">
+            <button id="pwr-start" class="mc-btn green">Start</button>
+            <button id="pwr-restart" class="mc-btn yellow">Restart</button>
+            <button id="pwr-stop" class="mc-btn red">Stop</button>
+          </div>
+          <p id="pwr-msg" class="hint"></p>
+        </div>
+      </div>
+      <div class="mc-panel">
+        <h2>Broadcast Pesan</h2>
+        <div class="row">
+          <input id="say-text" placeholder="Pesan ke semua pemain…">
+          <button id="say-btn" class="mc-btn">Kirim</button>
+        </div>
+      </div>
+      <div class="mc-panel">
+        <h2>Performa Live</h2>
+        <div class="perfgrid">
+          <div class="perf"><span>TPS (1m)</span><b id="pf-tps">…</b></div>
+          <div class="perf"><span>MSPT</span><b id="pf-mspt">…</b></div>
+          <div class="perf"><span>RAM Java</span><b id="pf-ram">…</b></div>
+          <div class="perf"><span>Uptime</span><b id="pf-up">…</b></div>
+        </div>
+        <canvas id="tps-chart" width="620" height="90"></canvas>
+        <p class="hint">TPS ideal 20. Di bawah 18 berarti lag.</p>
+      </div>
+      <div class="mc-panel">
+        <h2>Update Paper</h2>
+        <div class="kv"><span>Build terpasang</span><b id="pu-cur">…</b></div>
+        <div class="kv"><span>Build terbaru</span><b id="pu-latest">…</b></div>
+        <button id="pu-btn" class="mc-btn small yellow hidden">Update sekarang</button>
+        <p id="pu-msg" class="hint"></p>
+      </div>
+    </section>
+
+    <!-- PEMAIN -->
+    <section id="tab-pemain" class="tabpanel">
+      <div class="mc-panel">
+        <h2>Online Sekarang</h2>
+        <div id="online-list" class="plist"><p class="hint">Memuat…</p></div>
+      </div>
+      <div class="grid2">
+        <div class="mc-panel">
+          <h2>Operator (OP)</h2>
+          <div id="ops-list" class="plist"><p class="hint">Memuat…</p></div>
+          <div class="row">
+            <input id="op-name" placeholder="Username">
+            <button id="op-add" class="mc-btn small">Jadikan OP</button>
+          </div>
+        </div>
+        <div class="mc-panel">
+          <h2>Whitelist</h2>
+          <label class="switch"><input type="checkbox" id="wl-toggle"><span>Whitelist aktif</span></label>
+          <div id="wl-list" class="plist"><p class="hint">Memuat…</p></div>
+          <div class="row">
+            <input id="wl-name" placeholder="Username">
+            <button id="wl-add" class="mc-btn small">Tambah</button>
+          </div>
+        </div>
+      </div>
+      <div class="mc-panel">
+        <h2>Ban / Unban</h2>
+        <div class="row">
+          <input id="ban-name" placeholder="Username">
+          <input id="ban-reason" placeholder="Alasan (opsional)">
+          <button id="ban-btn" class="mc-btn small red">Ban</button>
+          <button id="pardon-btn" class="mc-btn small">Unban</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLUGIN -->
+    <section id="tab-plugin" class="tabpanel">
+      <div class="mc-panel">
+        <h2>Plugin Terinstall</h2>
+        <p class="hint">Paper memakai <b>plugin</b> (.jar di folder plugins). Aktif/nonaktif, install, atau hapus di sini — <b>restart server</b> agar perubahan berlaku.</p>
+        <div id="plugin-list" class="plist"><p class="hint">Memuat…</p></div>
+        <div class="btnrow" style="margin-top:10px">
+          <button id="plugin-restart" class="mc-btn small yellow">Restart server sekarang</button>
+        </div>
+      </div>
+      <div class="mc-panel">
+        <h2>Upload Manual</h2>
+        <div class="row">
+          <input id="plugin-file" type="file" accept=".jar">
+          <button id="plugin-upload" class="mc-btn small">Upload .jar</button>
+        </div>
+        <p id="plugin-up-msg" class="hint"></p>
+      </div>
+      <div class="mc-panel">
+        <h2>Cari di Modrinth</h2>
+        <div class="row">
+          <input id="mr-q" placeholder="misal: LuckPerms, EssentialsX, Dynmap…">
+          <button id="mr-search" class="mc-btn small">Cari</button>
+        </div>
+        <div id="mr-hits" class="plist"></div>
+        <div id="mr-vers" class="plist"></div>
+        <p id="mr-msg" class="hint"></p>
+      </div>
+    </section>
+
+    <!-- DUNIA -->
+    <section id="tab-dunia" class="tabpanel">
+      <div class="mc-panel">
+        <h2>Dunia</h2>
+        <div class="kv"><span>Seed</span><b id="w-seed">…</b></div>
+        <div class="kv"><span>Ukuran dunia</span><b id="w-size">…</b></div>
+      </div>
+      <div class="mc-panel">
+        <h2>Backup Dunia</h2>
+        <button id="w-backup" class="mc-btn small">Backup sekarang</button>
+        <p id="w-msg" class="hint"></p>
+        <div id="w-backups" class="plist"></div>
+      </div>
+      <div class="mc-panel">
+        <h2>Ganti Seed</h2>
+        <p class="hint">Dunia lama otomatis di-backup dulu. Akun AuthMe aman, tapi inventory ikut ke-reset.</p>
+        <div class="row">
+          <input id="w-seed-in" placeholder="angka seed, misal 486362209">
+          <button id="w-seed-btn" class="mc-btn small red">Ganti &amp; generate ulang</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- GAMERULE -->
+    <section id="tab-gamerule" class="tabpanel">
+      <div class="mc-panel">
+        <h2>Difficulty — berlaku langsung</h2>
+        <div class="row">
+          <select id="diff-sel">
+            <option value="peaceful">peaceful</option>
+            <option value="easy">easy</option>
+            <option value="normal">normal</option>
+            <option value="hard">hard</option>
+          </select>
+          <button id="diff-btn" class="mc-btn small">Terapkan</button>
+        </div>
+      </div>
+      <div class="mc-panel">
+        <h2>Gamerules — berlaku langsung</h2>
+        <p class="hint">Klik nilai untuk mengubah. Tersimpan di dunia, tanpa restart.</p>
+        <div id="gr-list"><p class="hint">Memuat…</p></div>
+      </div>
+    </section>
+
+    <!-- CHEAT -->
+    <section id="tab-cheat" class="tabpanel">
+      <div class="mc-panel">
+        <h2>Mode Cheat</h2>
+        <p class="hint">Nyala = semua pemain online jadi OP (bisa pakai command seperti /gamemode, /give, /tp). Mati = semua OP dicabut.</p>
+        <div class="cheatbox">
+          <span id="cheat-state" class="bigstate">…</span>
+          <button id="cheat-toggle" class="mc-btn big">…</button>
+        </div>
+        <p id="cheat-msg" class="hint"></p>
+      </div>
+      <div class="mc-panel">
+        <h2>Aturan Main</h2>
+        <div class="kv"><span>PvP</span><b id="rule-pvp">…</b></div>
+        <div class="kv"><span>Command block</span><b id="rule-cb">…</b></div>
+        <div class="kv"><span>Whitelist</span><b id="rule-wl">…</b></div>
+        <p class="hint">Ubah di tab Pengaturan (perlu restart server).</p>
+      </div>
+    </section>
+
+    <!-- PENGATURAN -->
+    <section id="tab-aturan" class="tabpanel">
+      <div class="mc-panel">
+        <h2>Pengaturan Server</h2>
+        <p class="hint">Menyimpan akan menulis server.properties — <b>restart server</b> agar berlaku.</p>
+        <div id="settings-form"></div>
+        <button id="save-settings" class="mc-btn green">Simpan Pengaturan</button>
+        <p id="settings-msg" class="hint"></p>
+      </div>
+    </section>
+
+    <!-- FILE -->
+    <section id="tab-file" class="tabpanel">
+      <div class="mc-panel">
+        <h2>File Konfigurasi</h2>
+        <p class="hint">Edit file config server (.yml, .properties, .json, .txt). Backup .bak otomatis dibuat tiap simpan.</p>
+        <p class="hint">Lokasi: <b id="file-cwd">.</b> <a href="#" id="file-up" style="color:var(--gold)">▲ naik</a></p>
+        <div id="file-list" class="plist"><p class="hint">Memuat…</p></div>
+      </div>
+      <div class="mc-panel hidden" id="file-editor-panel">
+        <h2 id="file-ed-title">Edit file</h2>
+        <textarea id="file-ed" class="codeed" spellcheck="false"></textarea>
+        <div class="btnrow" style="margin-top:8px">
+          <button id="file-save" class="mc-btn small green">Simpan</button>
+          <button id="file-cancel" class="mc-btn small">Tutup</button>
+        </div>
+        <p id="file-msg" class="hint"></p>
+      </div>
+    </section>
+
+    <!-- JADWAL -->
+    <section id="tab-jadwal" class="tabpanel">
+      <div class="mc-panel">
+        <h2>Restart Otomatis Harian</h2>
+        <p class="hint">Server restart sendiri tiap hari di jam yang dipilih (WIB).</p>
+        <label class="switch"><input type="checkbox" id="sch-r-on"><span>Aktif</span></label>
+        <div class="row">
+          <input id="sch-r-h" type="number" min="0" max="23" value="4" title="Jam">
+          <input id="sch-r-m" type="number" min="0" max="59" value="0" title="Menit">
+          <button id="sch-r-save" class="mc-btn small">Simpan</button>
+        </div>
+      </div>
+      <div class="mc-panel">
+        <h2>Backup Dunia Otomatis Harian</h2>
+        <p class="hint">Backup dunia tiap hari di jam yang dipilih. 7 backup terbaru disimpan.</p>
+        <label class="switch"><input type="checkbox" id="sch-b-on"><span>Aktif</span></label>
+        <div class="row">
+          <input id="sch-b-h" type="number" min="0" max="23" value="5" title="Jam">
+          <input id="sch-b-m" type="number" min="0" max="59" value="0" title="Menit">
+          <button id="sch-b-save" class="mc-btn small">Simpan</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- KONSOL -->
+    <section id="tab-konsol" class="tabpanel">
+      <div class="mc-panel">
+        <h2>Konsol</h2>
+        <div class="row">
+          <input id="cmd-input" placeholder="Ketik command tanpa garis miring, misal: time set day">
+          <button id="cmd-send" class="mc-btn">Jalankan</button>
+        </div>
+        <pre id="cmd-out" class="term"></pre>
+        <h2>Log Terbaru</h2>
+        <div class="row">
+          <button id="logs-reload" class="mc-btn small">Muat ulang log</button>
+        </div>
+        <pre id="logs-out" class="term"></pre>
+      </div>
+    </section>
+    <section id="tab-log" class="tabpanel">
+      <div class="mc-panel">
+        <h2>Log Aktivitas Admin</h2>
+        <p class="hint">Semua aksi yang dilakukan lewat portal ini tercatat di sini (100 terakhir).</p>
+        <div class="row">
+          <button id="act-reload" class="mc-btn small">Muat ulang</button>
+        </div>
+        <div id="act-list" class="act-list"><p class="hint">Memuat…</p></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
