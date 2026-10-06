@@ -430,6 +430,12 @@ class Handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         if path == "/":
             return self._static("landing.html", "text/html; charset=utf-8")
+        if path == "/sitemap.xml":
+            xml = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://realm.ramadanadipa.com/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
+</urlset>"""
+            return self._send(200, xml, "application/xml")
         if path == "/manage":
             return self._static("index.html", "text/html; charset=utf-8")
         if path.startswith("/static/"):
